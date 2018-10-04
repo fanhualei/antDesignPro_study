@@ -6,9 +6,9 @@
 
 * [Git常用命令使用大全](https://www.cnblogs.com/Gxiaopan/p/6714539.html)
 
-*  [git的一些基础命令](http://www.cnblogs.com/libin-1/p/5918468.html)
+* [git的一些基础命令](http://www.cnblogs.com/libin-1/p/5918468.html)
 
-
+* [阮一峰-常用 Git 命令清单](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 
 ## 入门
 
@@ -40,9 +40,32 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
-## 基本操作
+### 如何解决每次都要输入密码的问题
+
+```
+git remote rm origin 
+git remote add origin https://fanhualei:madengxia123@github.com/fanhualei/antDesignPro_study.git
+
+```
 
 
+
+
+
+
+
+## 常用操作
+
+
+
+```
+git add ./doc
+git commit -m "send commit"
+git push -u origin master
+
+
+
+```
 
 
 
