@@ -10,6 +10,8 @@
 
 * [阮一峰-常用 Git 命令清单](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 
+
+
 ## 入门
 
 
@@ -60,7 +62,11 @@ git remote add origin https://fanhualei:madengxia123@github.com/fanhualei/antDes
 
 ```
 git add ./doc
+
 git commit -m "send commit"
+
+git commit ./doc/*.* -m "send commit"
+
 git push -u origin master
 
 
