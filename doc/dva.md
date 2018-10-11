@@ -68,7 +68,7 @@ export default DvaExample;
 >
 >  配置好后，就会多一个菜单:dva例子
 
-![alt](imgs\dva-menu.png)
+![alt](imgs/dva-menu.png)
 
 
 
@@ -212,7 +212,7 @@ export default DvaExample;
 
 执行程序，就可以看到现在的结果
 
-![alt](imgs\dva-showlist.png)
+![alt](imgs/dva-showlist.png)
 
 
 
