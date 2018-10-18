@@ -62,6 +62,7 @@ git remote add origin https://fanhualei:madengxia123@github.com/fanhualei/antDes
 
 ```
 git add ./doc
+git add ./doc/imgs/
 
 git commit -m "send commit"
 
