@@ -11,6 +11,9 @@
   * [标准列表](#标准列表)
   * [卡片列表](#卡片列表)
   * [搜索列表](#搜索列表)
+    * [文章页面](#文章页面)
+    * [项目页面](#项目页面)
+    * [应用页面](#应用页面)
 * 详情页
   * 基础详情页
   * 高级详情页
@@ -542,4 +545,419 @@ export async function updateFakeList(params) {
 
 ### 搜索列表
 
-这里里面有三级菜单，如何显示不显示三级菜单，以及面包
+这里里面有三级菜单，如何显示不显示三级菜单,下面是注意事项：
+
+* 除了添加三个页面js文件，还要添加两个文件：List.js与Applications.js
+* 资源文件中，是继承父亲的名字的，所以要加上父节点的名字：
+
+> 页面效果
+
+![alt](imgs/example_list_search_menu.png)
+
+
+
+> 　路由的配置
+
+* 首先定义父级菜单：这个父菜单有一个component，这里是因为三个页面有公共的部分
+* 设计默认跳转：第一个是默认redirect到文章页．
+* 后面是三个默认的页面跳转：Articles Projects Applications
+
+```js
+{
+  path: '/list/search_fan',
+  name: 'searchlist_fan',
+  component: './List/List_fan',
+  routes: [
+    {
+      path: '/list/search_fan',
+      redirect: '/list/search/articles_fan',
+    },
+    {
+      path: '/list/search/articles_fan',
+      name: 'articles_fan',
+      component: './List/Articles_fan',
+    },
+    {
+      path: '/list/search/projects_fan',
+      name: 'projects_fan',
+      component: './List/Projects_fan',
+    },
+    {
+      path: '/list/search/applications_fan',
+      name: 'applications_fan',
+      component: './List/Applications_fan',
+    },
+  ],
+},
+```
+
+* 父节点的component有时候是不需要的，见异常页的界面定义
+
+```js
+      {
+        name: 'exception',
+        icon: 'warning',
+        path: '/exception',
+        routes: [
+          // exception
+          {
+            path: '/exception/403',
+            name: 'not-permission',
+            component: './Exception/403',
+          },
+          {
+            path: '/exception/404',
+            name: 'not-find',
+            component: './Exception/404',
+          },
+          {
+            path: '/exception/500',
+            name: 'server-error',
+            component: './Exception/500',
+          },
+          {
+            path: '/exception/trigger',
+            name: 'trigger',
+            hideInMenu: true,
+            component: './Exception/TriggerException',
+          },
+        ],
+      },
+```
+
+
+
+
+
+> 资源文件的配置
+
+```js
+  'menu.list.searchlist_fan': '搜索列表1',
+  'menu.list.searchlist_fan.articles_fan': '搜索列表（文章）1',
+  'menu.list.searchlist_fan.projects_fan': '搜索列表（项目）1',
+  'menu.list.searchlist_fan.applications_fan': '搜索列表（应用）1',
+```
+
+
+
+![alt](imgs/example_list_search_allpage.png)
+
+
+
+##### 公共component
+
+这部分内容是公共的部分
+
+> 页面部分的展示
+
+这里使用了PageHeaderWrapper，并使用了其中的tabList的功能
+
+```js
+    return (
+      <PageHeaderWrapper
+        title="搜索列表"
+        content={mainSearch}
+        tabList={tabList}
+        tabActiveKey={location.pathname.replace(`${match.path}/`, '')}
+        onTabChange={this.handleTabChange}
+      >
+        {children}
+      </PageHeaderWrapper>
+    );
+```
+
+> 如果Tab变更了，就调用handleTabChange函数
+
+通过key来判断是那个页面
+
+```js
+  handleTabChange = key => {
+    const { match } = this.props;
+    switch (key) {
+      case 'articles':
+        router.push(`${match.url}/articles_fan`);
+        break;
+      case 'applications':
+        router.push(`${match.url}/applications_fan`);
+        break;
+      case 'projects':
+        router.push(`${match.url}/projects_fan`);
+        break;
+      default:
+        break;
+    }
+  }
+```
+
+> 检索部分的代码与时间处理
+
+```js
+	//html代码部分
+	const mainSearch = (
+      <div style={{ textAlign: 'center' }}>
+        <Input.Search
+          placeholder="请输入"
+          enterButton="搜索"
+          size="large"
+          onSearch={this.handleFormSubmit}
+          style={{ width: 522 }}
+        />
+      </div>
+    );
+	//函数部分
+	handleFormSubmit = (value) => {
+    	// eslint-disable-next-line
+    	console.log(value);
+  	}
+
+
+```
+
+> 注意事项
+
+key一定要与url的结尾一致，因为通过这个名字，来判断那个tab是活跃的．
+
+```js
+    const tabList = [
+      {
+        key: 'articles_fan',
+        tab: '文章',
+      },
+      {
+        key: 'projects_fan',
+        tab: '项目',
+      },
+      {
+        key: 'applications_fan',
+        tab: '应用',
+      },
+    ];
+
+	//见PageHeaderWrapper的定义
+	//tabActiveKey={location.pathname.replace(`${match.path}/`, '')}
+    //这句话就是为了去掉前缀，得到一个key值
+```
+
+##### 文章页面
+
+文章页面有几个特点，首先有一个就是，分页加载
+
+
+
+![alt](imgs/example_list_search_article.png)
+
+
+
+###### 检索区域
+
+主要使用了Form与FormItem组件，与Select组件
+
+> 所属类目
+
+使用了TagSelect组件
+
+> owner
+
+使用了Select组件，这是一个多选，并且有一个超链接定义了一个事件
+
+
+
+###### 列表区域
+
+> 使用了StandardFormRow标准的检索组件
+
+一行是一个区域，每行有一个下划线
+
+> 使用了Form.item组件
+
+FormItem
+
+![alt](imgs/example_list_search_article_list.png)
+
+
+
+###### 数据查询
+
+> 使用了List Model的查询信息
+
+```js
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'list/fetch',
+      payload: {
+        count: 5,
+      },
+    });
+  }
+```
+
+###### 公共组件
+
+
+| 组件名         | 内容                                                         |
+| -------------- | ------------------------------------------------------------ |
+| owners         | 一个josn字符串，为了owner下拉框设置                          |
+| IconText       | 这个组件，可以传递两个参数，分别是icon与text                 |
+| ListContent    | List的内容组件，可以传递５个参数，里面有一个格式化时间的函数 |
+| formItemLayout | 用来做自适应的页面扩展                                       |
+| loadMore       | 是否显示加载更多按钮，以及这个按钮的事件                     |
+
+
+
+###### 相关函数
+
+
+
+>  检索区域发生变化时，触发函数
+
+> onValuesChange 当Form中数值发生变化时，触发这个事件
+
+如果改变了查询内容，就重新加载数据
+
+changedValues是当前改变的数据，allValues是当前页面的数据
+
+```js
+@Form.create({
+  onValuesChange({ dispatch }, changedValues, allValues) {
+    // 表单项变化时请求数据
+    // eslint-disable-next-line
+    // 模拟查询表单生效
+    console.log("==========================================")
+    dispatch({
+      type: 'list/fetch',
+      payload: {
+        count: 5,
+      },
+    });
+  },
+})
+```
+> 　页面初始化
+
+从数据库查询出数据来
+
+```js
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'list/fetch',
+      payload: {
+        count: 5,
+      },
+    });
+  }
+```
+
+> 加载更多按钮
+
+React难道每次都把数据缓存到前端吗？
+
+```js
+  fetchMore = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'list/appendFetch',
+      payload: {
+        count: pageSize,
+      },
+    });
+  };
+```
+
+ > 点击加载自己超链接
+
+```js
+  setOwner = () => {
+    const { form } = this.props;
+    form.setFieldsValue({
+      owner: ['wzj'],
+    });
+  };
+
+//render 中这么来设置，某个node中的事件
+
+<FormItem>
+  {getFieldDecorator('owner', {
+    initialValue: ['wjh', 'zxx'],
+  })(
+    <Select
+      mode="multiple"
+      style={{ maxWidth: 286, width: '100%' }}
+      placeholder="选择 owner"
+    >
+      {owners.map(owner => (
+        <Option key={owner.id} value={owner.id}>
+          {owner.name}
+        </Option>
+      ))}
+    </Select>
+  )}
+  <a className={styles.selfTrigger} onClick={this.setOwner}>
+    只看自己的
+  </a>
+</FormItem>
+
+
+
+```
+
+
+
+
+
+##### 项目页面
+
+![alt](imgs/example_list_search_project.png)
+
+
+
+###### 组件的区别
+
+这个页面使用了PureComponent，而文章页面使用了Component．
+
+那么React.Component与React.PureComponent的区别是什么？
+
+```
+React.PureComponent 与 React.Component 几乎完全相同，但 React.PureComponent 通过prop和state的浅对比来实现 shouldComponentUpate()。
+
+如果React组件的 render() 函数在给定相同的props和state下渲染为相同的结果，在某些场景下你可以使用 React.PureComponent 来提升性能。
+
+React.PureComponent 的 shouldComponentUpdate() 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新, 原文：false-negatives)。当你期望只拥有简单的props和state时，才去继承 PureComponent ，或者在你知道深层的数据结构已经发生改变时使用 forceUpate() 。或者，考虑使用 不可变对象 来促进嵌套数据的快速比较。
+
+此外,React.PureComponent 的 shouldComponentUpate() 会忽略整个组件的子级。请确保所有的子级组件也是”Pure”的。
+--------------------- 
+原文：https://blog.csdn.net/qq_29854831/article/details/79657718 
+```
+
+
+
+页面的
+
+AvatarList
+
+使用了Card组件，制作了相关页面	
+
+```js
+        <Col lg={8} md={10} sm={10} xs={24}>
+          <Card
+            className={styles.card}
+            hoverable
+            cover={<img  src="https://gw.alipayobjects.com/zos/rmsportal/uMfMFlvUuceEyPpotzlq.png" />}
+          >
+            <Card.Meta
+              title={<a>tile</a>}
+              description={<Ellipsis lines={2}>城镇中有那么多的酒馆，她却偏偏走进了我的酒馆</Ellipsis>}
+            />
+          </Card>
+        </Col>
+```
+
+
+
+
+
+
+
+##### 应用页面
+

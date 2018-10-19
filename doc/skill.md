@@ -5,21 +5,16 @@
 > 目录
 
 * [跨域问题](#跨域问题)
-
 * [JSON处理](#json处理)
-
 * [栅格使用](#栅格使用)
-
 * [List列表使用](#list列表使用)
-
 * [Avatar头像](#avatar头像)
-
 * [Modal对话框](#modal对话框)
-
+* [Form组件](#form组件)
+* [AvatarList组件](#AvatarList组件)
+* [Card组件](#Card组件)
 * 缓存
-
 * mock与真实环境切换
-
 
 
 
@@ -219,4 +214,59 @@ function warning() {
 ```
 
 
+
+## Form组件
+
+form的功能还是很多的，在做编辑框的时候，可以仔细学习一下
+
+[官方说明](https://ant.design/components/form-cn/)
+
+* 有Form与Formitem两个组件
+* 有不同的排列方法，横排与竖排列
+* 可以进行校验，以及自定义校验
+* **可以动态的增加表单项目（这个有意思）**
+* 多个空间自动关联
+* 自定义控件
+* 提供了多个组件，例如文件上传等等
+
+
+
+## TagSelect组件
+
+这个组件是ant design pro 自己定义的组件
+
+
+
+## Select 组件
+
+[官方文档](https://ant.design/components/select-cn/)
+
+* 可以disable整体或个别下拉框
+* 带搜索功能的
+* 多选框的
+* 三种大小
+* 具有过滤属性的
+* 联动的
+* 分组的**(这个非常好用，例如选择一个树形结构)**
+* 除了得到value还可以得到text
+* 输入内容，自动联想到远程数据
+* 自动分词的效果
+
+
+
+## AvatarList组件
+
+这个是ant design pro 自己的组件
+
+
+
+
+
+## Card组件
+
+[官方介绍](https://ant.design/components/card-cn/)
+
+
+
+这个要仔细看看
 

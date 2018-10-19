@@ -70,8 +70,8 @@ git commit ./doc/*.* -m "send commit"
 
 git push -u origin master
 
-
-
+sudo sh /opt/WebStorm-2018.2/bin/webstorm.sh
+ 
 ```
 
 
