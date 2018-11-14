@@ -13,6 +13,9 @@
 * [Form组件](#form组件)
 * [AvatarList组件](#AvatarList组件)
 * [Card组件](#Card组件)
+* [Tooltip文字提示](#Tooltip文字提示)
+* [Menu导航菜单](#Menu导航菜单)
+* [Dropdown下拉菜单](#Dropdown下拉菜单)
 * 缓存
 * mock与真实环境切换
 
@@ -270,3 +273,67 @@ form的功能还是很多的，在做编辑框的时候，可以仔细学习一�
 
 这个要仔细看看
 
+
+
+## Tooltip文字提示
+
+[官网介绍](https://ant.design/components/tooltip-cn/)
+
+
+
+简单的文字提示气泡框
+
+```js
+<Tooltip title="下载">
+    <Icon type="download" />
+</Tooltip>
+```
+
+
+
+## Menu导航菜单
+
+[官方介绍](https://ant.design/components/menu-cn/)
+
+
+* 水平的顶部导航菜单
+* 垂直菜单，子菜单内嵌在菜单区域
+* 只展开当前父级菜单
+* 子菜单是弹出的形式
+* 内建了两套主题 light|dark
+* 展示动态切换模式
+
+```js
+<Menu>
+  <Menu.Item>
+    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+      1st menu item
+    </a>
+  </Menu.Item>
+  <Menu.Item>
+    <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+      2nd menu item
+    </a>
+  </Menu.Item>
+  <Menu.Item>
+    <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+      3d menu item
+    </a>
+  </Menu.Item>
+</Menu>
+```
+
+
+
+## Dropdown下拉菜单
+
+[官方说明](https://ant.design/components/dropdown-cn/)
+
+* 最简单的下拉菜单
+* 支持 6 个弹出位置
+* 分割线和不可用菜单项
+* 默认是移入触发菜单，可以点击触发
+* 带下拉框的按钮
+* 多级菜单
+* 右键菜单
+* 默认是点击关闭菜单，可以关闭此功能
