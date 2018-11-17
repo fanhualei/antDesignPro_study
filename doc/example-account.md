@@ -303,7 +303,7 @@ Card.Meta
 
 ```
 
-![alt](imgs\example_account_center_application2.png)
+![alt](imgs/example_account_center_application2.png)
 
 
 
