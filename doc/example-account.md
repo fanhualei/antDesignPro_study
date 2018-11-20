@@ -305,6 +305,259 @@ Card.Meta
 
 ![alt](imgs/example_account_center_application2.png)
 
+### 项目List列表
+
+![alt](imgs/example_account_center_project.png)
+
+
+
+```
+在这个项目中用到的还是List控件
+比前两个多了以下三部分：
+１：封面　　cover={<img alt={item.title} src={item.cover} />}
+２：时间函数　import moment from 'moment';
+３：AvatarList用户头像列表
+	
+其他的跟Application都一样
+
+```
+
+
+
+* [AvatarList官方说明](https://pro.ant.design/components/AvatarList-cn)
+
+
+
+
+
+## 个人设置
+
+![alt](imgs/example_account_setting_info.png)
+
+
+
+### React自带的函数
+
+```
+下面是Class默认的一些函数
+１：constructor
+	这是ES6对类的默认方法，通过 new 命令生成对象实例时自动调用该方法。并且，该方法是类中必须有的，如果没有显示定义，则会默认添加空的constructor( )方法。
+
+２：getDerivedStateFromProps
+	无论是state改变还是props改变，都会执行这个函数
+	
+３：componentDidMount
+	在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+	
+４：componentWillUnmount
+	在组件从 DOM 中移除之前立刻被调用
+	
+５：resize
+	上面的３与４是用来监听窗口变化引起的事件，当窗口比较大的时候，菜单是在左边．
+	如果窗口比较小的时候，菜单显示在上边
+
+
+```
+
+
+
+### State定义的内容
+
+```
+1:mode: 'inline', 菜单是在最左侧，还是顶部
+2:menuMap,菜单定义
+3:selectKey，当前选中的菜单数值
+
+menuMap定义
+{
+    "base-fan":基本设置
+    "security-fan": 安全设置
+    "binding-fan":账号绑定
+    "notification-fan":新消息通知
+}
+```
+
+
+
+### 私有函数
+
+```
+１：getmenu　，得到Menu的Html列表
+２：getRightTitle，得到右边的Title
+３：selectKey，当点击菜单时，调用这个函数．
+４：
+```
+
+
+
+### 页面展示
+
+* [Menu组件的使用说明](http://09x.ant.design/components/menu/)
+
+```
+Menu
+	mode 	菜单类型
+	selectedKeys 	当前选中的菜单项 key 数组
+	onClick 	点击 menuitem 调用此函数，参数为 {item, key}
+	
+Menu.Item props：菜单项目
+	disabled 	是否禁用
+	key 	item 的唯一标志
+	
+Menu.SubMenu props:如果有子菜单的化，这个父菜单
+	title 	子菜单项值
+	children 	(MenuItem or SubMenu)[] 	子菜单的菜单项
+	
+
+```
+
+### 基本设置页面
+
+```
+使用的控件：
+１：Form, Form.Item
+２：Input, 
+３：Upload, 
+４：Select, Option
+５：Button
+
+```
+
+
+
+
+
+#### Form的具体用法
+
+* [官方说明](https://ant.design/components/form-cn/)
+
+```
+Form
+	1:经 Form.create() 包装过的组件会自带 this.props.form 属性
+	2:layout	表单布局
+	3:onSubmit	数据验证成功后回调事件
+	4:hideRequiredMark 隐藏所有表单项的必选标记
+	
+Form.create(options)
+	1:@Form.create()
+	2:getFieldDecorator	用于和表单进行双向绑定，详见下方描述
+	3:form.setFieldsValue(obj);　用来给form添加数据
+	4:
+	
+getFieldDecorator(id, options) 参数
+	1:id	必填输入控件唯一标志。支持嵌套式的写法。
+	2:options.rules	校验规则，参考下方文档
+```
+
+
+
+#### 电话号码输入框
+
+> 功能说明
+
+```
+电话号码这个功能做的非常有特性，体现了react的封装．
+１：数据库中有一个phone字段，传入到phone控件中，变成连个input输入框
+２：在phone控件中传入两个变量：value, onChange
+３：将value分解成一个数组，onChange事件中，将两个分开的数字拼写成一个电话号码010-62262345
+
+```
+
+> state与props的区别
+
+```
+props是一个从外部传进组件的参数，由于React具有单向数据流，所以它的主要作用是从父组件向子组件传递数据，它是不可改变的。如果想要改变它，只能通过外部组件传入新的props来重新渲染子组件，否则子组件的props以及展现形式不会改变。props除了可以传字符串、数字，还可以传数组，对象、甚至是回调函数。
+
+state的主要作用是用于组件保存、控制以及修改自己的状态，它只能在constructor中初始化，state是可以被改变的。state放改动的一些属性，比如点击选中，再点击取消。类似的这种属性就可以放到state里。
+
+没有state的叫做无状态组件，多用props少用state，多写无状态组件。
+```
+
+在看到这部分代码时，总在想怎么将数值给传到外面去
+
+
+
+#### 省市下拉选择框
+
+> 功能说明
+
+```
+省市两个下拉框选择
+１：从数据库中查询省的列表
+	从model中调用，分三步A:设置loading=true;B:从service中获取数据;C:将loading=false;
+
+２：	
+
+
+```
+
+
+
+> 函数说明
+
+```
+重载的函数
+１：componentDidMount　[这个函数一般用来查询数据]
+组件渲染完成，已经出现在dom文档里，可以在各个周期实现特定的操作。
+
+２：componentDidUpdate　［这个函数一般用在控件改变了］
+在组件的更新已经同步到 DOM 中之后立刻被调用。该方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作 DOM 元素。
+
+
+
+自己定义的函数
+１：getProvinceOption　得到省的Option Html代码
+２：getCityOption　得到市的Option Html代码
+３：getOption　这个函数，被上面两个函数调用，用来具体生成html代码
+４：selectProvinceItem，当省下拉框改变时，触发这个函数
+	4.1:首先调用查询语句'geographic/fetchCity'，查询市
+	4.2:其次设置province为当前选项，设置city为空．
+５：selectCityItem，当市下拉框改变时，触发这个函数
+６：conversionObject　初始化province, city
+```
+
+* [重载函数的说明](https://blog.csdn.net/qq_32014215/article/details/67636798)
+* [select控件说明](https://ant.design/components/select-cn/)
+
+```
+Select控件
+	１：value	指定当前选中的条目
+	２：labelInValue　是否把每个选项的 label 包装到 value 中，会把 Select 的 value 类型从 string 变为 {key: string, label: ReactNode} 的格式
+	３：showSearch　使单选模式可搜索
+	４：onSelect　被选中时调用，参数为选中项的 value (或 key) 值
+```
+
+
+
+
+
+### 安全设置页面
+
+```
+这个页面中，定义了一个关于密码强度的变量
+```
+
+
+
+### 账号绑定
+
+```
+使用了List的　actions avatar title description 
+```
+
+
+
+
+
+### 新消息通知
+
+```
+这个页面使用了List控件用来展示信息
+List控件有下列属性：dataSource renderItem List.Item-cations List.Item.Meta-title description
+```
+
+
+
 
 
 
