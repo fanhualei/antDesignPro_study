@@ -1,8 +1,11 @@
 # ant design pro 例子 - 结果
 
+> 目录
 
+* [成功页](#成功页)
+* [错误页](#错误页)
 
-* [result控件说明](https://pro.ant.design/components/Result-cn/)
+* [result控件官方说明](https://pro.ant.design/components/Result-cn/)
 
 
 
