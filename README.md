@@ -46,6 +46,9 @@ https://ant.design/docs/react/introduce-cn
   * [结果页](doc/example-result.md)
   * [异常页](doc/example-exception.md)
   * [个人主页](doc/example-account.md)
+  * [dashboard](./doc/example-dashboard.md)
+  * 登录注册
+  * 顶部导航与设置
 * API交互
   * 查询一个列表
   * 查询一个分页列表
