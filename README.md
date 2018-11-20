@@ -6,6 +6,21 @@
 
 
 
+```
+常用网址
+https://github.com/ant-design/ant-design-pro/tree/master/src/pages
+
+https://pro.ant.design/components/AvatarList-cn
+
+https://ant.design/docs/react/introduce-cn
+
+
+```
+
+
+
+
+
 我想了解一下，设计规范，例如controller的删除函数，与查询函数是否是一个．
 
 
