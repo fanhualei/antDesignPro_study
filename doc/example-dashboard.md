@@ -3,6 +3,7 @@
 > 目录
 
 * [分析页](#分析页)
+* [监控页](#监控页)
 
 
 
@@ -108,21 +109,173 @@
 
 ## 监控页
 
+```
+用到的基本组件
+１：Row, 
+２：Col, 
+３：Card, 
+４：Tooltip
+
+用到的Chat组件
+１：Pie,  
+２：WaterWave,
+３：Gauge, 
+４：TagCloud
+
+
+用到的Pro组件
+１：NumberInfo
+２：CountDown　倒计时
+３：ActiveChart
+４：numeral　数字格式化组件
+５：GridContent
+
+用到的权限相关
+１：Authorized
+
+整体布局：
+１：外围使用了GridContent，然后用了两个Row
+```
+
+
+
 ![alt](imgs/example_dashboard_monitor_01.png)
 
 ```
+布局
+
+１：左右两部分，左侧是［活动实时交易情况］，右侧包行两个小Card框
+２：［活动实时交易情况］使用了Card控件，中间包含一行Row,与一个图片．
+	2.1:中间的一行Row包含４个Col，使用了NumberInfo
+	2.2:那个地图是一个图片，骗人的．
+３：右侧包行两个小Card框
+	3.1:使用了ActiveChart
+	3.2:使用了Gauge
 
 ```
 
-
+```
+ActiveChart 是一个目标组件可以研究一下
+```
 
 
 
 ![alt](imgs/example_dashboard_monitor_02.png)
 
 ```
+１：一行三列，分别是2/4 1/4 1/4 
+２：各类占比，又分成一行三列,没个区域使用了Pie控件
+３：热门搜索，使用了TagCloud控件
+４：补贴资金剩余，使用了WaterWave控件
+```
+
+
+
+##  工作台页
 
 ```
+基本组件
+    １：Row, 
+    ２：Col, 
+    ３：Card, 
+    ４：List, 
+    ５：Avatar
+
+Pro组件
+	１：Radar　雷达图
+    ２：EditableLinkGroup
+    ３：PageHeaderWrapper
+    ４：
+
+其他组件
+	１：Link　umi/link的链接控件
+	２：moment
+```
+
+
+
+```
+１：PageHeaderWrapper布局使用了content与extraContent
+２：中间部分的使用了一行两列的布局
+	2.1:左侧的列布局：进行中的项目与动态
+	2.2:右侧的列布局，包含快速开始　XX指数
+```
+
+
+
+
+
+![alt](imgs/example_dashboard_workplace_01.png)
+
+> 进行中的项目
+
+```
+１：外围是一个Card控件，使用了extra
+２：内部用了Card.Grid,为了初始化这个控件，使用了notice.map，循环显示
+３：每个Card.Grid中，又嵌套进入了Card控件，
+４：在每个Card中，使用Card.Meta，Link，moment
+	4.1:moment用来计算距离当前的时间：{moment(item.updatedAt).fromNow()}
+```
+
+
+
+> 动态
+
+```
+１：使用了Card
+２：使用了List控件
+	2.1: 循环生成List.Item
+		2.1.1: 设置了List.Item.Meta中的，avatar　title　description属性．
+３：其中Title比较特殊，通过template,得到key=group或project，并且通过item[key]得到数据
+	template: "在 @{group} 新建项目 @{project}"
+		
+```
+
+```json
+//每个Item的数据
+group: {name: "高逼格设计天团", link: "http://github.com/"}
+id: "trend-1"
+project: {name: "六月迭代", link: "http://github.com/"}
+template: "在 @{group} 新建项目 @{project}"
+updatedAt: "2018-11-21T13:07:05.971Z"
+user: {name: "曲丽丽", avatar: "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"}
+```
+
+![alt](imgs/example_dashboard_workplace_03.png)
+
+> 便捷导航
+
+
+
+```
+EditableLinkGroup 是用来快速导航，这是一个自定义控件，可以研究一下他的代码
+```
+
+![alt](imgs/example_dashboard_workplace_04.png)
+
+
+
+> 团队
+
+```
+使用了Link来显示标签
+				<Row gutter={48}>
+                  {notice.map(item => (
+                    <Col span={12} key={`members-item-${item.id}`}>
+                      <Link to={item.href}>
+                        <Avatar src={item.logo} size="small" />
+                        <span className={styles.member}>{item.member}</span>
+                      </Link>
+                    </Col>
+                  ))}
+                </Row>
+```
+
+
+
+![alt](imgs/example_dashboard_workplace_05.png)
+
+
 
 
 
@@ -256,6 +409,7 @@ NumberInfo
 ３：total	总量
 ４：status	增加状态
 ５：subTotal	子总量
+６：suffix　total的后缀
 ```
 
 * [官方网址](https://pro.ant.design/components/NumberInfo-cn/)
@@ -343,6 +497,80 @@ Pie
 
 
 * [官方网址](https://pro.ant.design/components/Charts-cn/#Pie)
+
+
+
+### CountDown倒计时
+
+```
+基本用法：
+	import CountDown from 'ant-design-pro/lib/CountDown';
+	const targetTime = new Date().getTime() + 3900000;
+    <CountDown target={targetTime} />
+API
+	１：format	时间格式化显示
+	２：target	目标时间
+	３：onEnd	倒计时结束回调
+```
+
+
+
+### Gauge仪表盘
+
+[官方说明](https://pro.ant.design/components/Charts-cn/#Gauge)
+
+```
+title	图表标题
+height	图表高度
+percent	进度比例
+```
+
+
+
+### TagCloud标签云
+
+```
+data	标题
+height	高度值
+```
+
+
+
+### WaterWave水波图
+
+````
+title	图表标题
+height	图表高度
+color	图表颜色
+percent	进度比例
+````
+
+
+
+### Authorized权限
+
+权限组件，通过比对现有权限与准入权限，决定相关元素的展示。
+
+> 基本用法
+
+```js
+import RenderAuthorized from 'ant-design-pro/lib/Authorized';
+import { Alert } from 'antd';
+
+const Authorized = RenderAuthorized('user');
+const noMatch = <Alert message="No permission." type="error" showIcon />;
+
+ReactDOM.render(
+  <div>
+    <Authorized authority="admin" noMatch={noMatch}>
+      <Alert message="user Passed!" type="success" showIcon />
+    </Authorized>
+  </div>,
+  mountNode,
+);
+```
+
+
 
 
 
