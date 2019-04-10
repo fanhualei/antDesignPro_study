@@ -28,10 +28,10 @@ https://ant.design/docs/react/introduce-cn
 
 
 * 环境搭建
-  * 下载代码
+  * [下载代码](doc/start.md)
   * [webStorm使用](doc/webstorm.md)
   * [git的使用](doc/git.md)
-* 快速入门
+* [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle
   * 配置多语言文件
