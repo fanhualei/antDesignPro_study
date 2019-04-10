@@ -664,15 +664,381 @@ const proxy = {
 export default delay(proxy, 0);
 ```
 
+## 国际化
+
+* [官方文档](https://ant-design-pro.gitee.io/docs/i18n-cn)
+
+约定 在src/locales 中引入 相应的 js，例如 en-US.js 和 zh-CN.js
+
+
+
+### 定义不同的语言文件
+
+* 可以带参数
+
+zh-CN.js
+
+```jsx
+export default {
+  WELCOME_TO_UMI_WORLD: '{name}，欢迎光临umi的世界',
+}
+```
+
+en-US.js
+
+```jsx
+export default {
+  WELCOME_TO_UMI_WORLD: '{name}, welcome to umi\'s world',
+}
+```
+
+#### 语言文件与Key规范
+
+**语言文件**: 不同的语言文件放入到不同的文件夹中，例如下图
+
+**命名规范**: 模块名.功能或组件.信息名
+
+![alt](imgs\locales.png)
+
+
+
+### 使用语言文件
+
+主要有四个函数可以使用：
+
+* formatMessage 函数
+* FormattedMessage 标签
+* setLocale 函数
+* getLocale 函数
+
+
+
+> 例子里面有传递参数的说明
+
+
+
+```jsx
+import { formatMessage,FormattedMessage,setLocale, getLocale,} from 'umi/locale';
+import React, { Component } from 'react';
+import { Button } from 'antd';
+
+class Local extends Component {
+  // 得到当前语言环境与设置语言环境的函数
+  changLang = () => {
+    const locale = getLocale();
+    if (!locale || locale === 'zh-CN') {
+      setLocale('en-US');
+    } else {
+      setLocale('zh-CN');
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        函数形式获得字符串：{formatMessage({id:'WELCOME_TO_UMI_WORLD'}, { name: '小千同学', })}
+        <div>
+          标签形式获得字符串：<FormattedMessage id="WELCOME_TO_UMI_WORLD" values={{ name: '小千同学' }}/>
+        </div>
+        <Button onClick={() => { this.changLang();}}>
+          改变语音
+        </Button>
+      </div>
+    );
+  }
+}
+export default Local;
+```
+
+
+
+## 更换主题
+
+
+
+### 主题定制
+
+我们基于 Ant Design React 进行开发，完全支持官方提供的 less 变量定制功能. 你可以在脚手架目录中找到 `config/config.js` 代码类似这样:
+
+```js
+...
+theme: {
+  'font-size-base': '14px',
+  'badge-font-size': '12px',
+  'btn-font-size-lg': '@font-size-base',
+  'menu-dark-bg': '#00182E',
+  'menu-dark-submenu-bg': '#000B14',
+  'layout-sider-background': '#00182E',
+  'layout-body-background': '#f0f2f5',
+};
+...
+```
+
+更多方式可以参考官方文档：[定制主题](https://ant.design/docs/react/customize-theme-cn)。
+
+* 改变config后，要在IDE重新启动服务，另外也不建议这样修改，推荐使用覆盖样式
+
+   
+
+## UI 测试
+
+[官方文档](https://ant-design-pro.gitee.io/docs/ui-test-cn)
+
+没有看明白怎么测试
+
+
+
+## 独立使用 Pro 组件
+
+
+
+Ant Design Pro 脚手架内提供了一套默认[业务组件](http://pro.ant.design/components)，这些组件抽象了控制台业务中的一些常见区块。我们将持续维护和迭代这些组件，为中后台业务提供比 Ant Design 基础组件更高级别的抽象。
+
+### 如何使用
+
+Ant Design Pro 脚手架内用到的组件分为两种：
+
+- antd 组件：<https://ant.design/docs/react/introduce-cn>
+- pro 自带组件：<https://github.com/ant-design/ant-design-pro/tree/master/src/components>
+
+对于脚手架的用户，你可以在脚手架中直接引用/新增/改造 pro 的自带组件，具体方式可参考 [新增组件](https://ant-design-pro.gitee.io/docs/new-component-cn)。
+
+对于没有使用这套脚手架的开发者，我们提供了一种方式来调用这套内建组件。
+
+
+
+## 错误处理
+
+
+
+[官方文档](https://ant-design-pro.gitee.io/docs/error-handle-cn)
+
+
+
+在用户使用过程中，可能遇到各种异常情况，比如页面404，申请结果失败，请求的返回异常等等，这篇文档会按照报错形式的不同，分别介绍下相应的处理建议。
+
+### 页面级报错
+
+- 路由直接引导到报错页面，比如你输入的网址没有匹配到任何页面，可以由路由引导到预设的 404 页面。
+- 代码控制跳转到报错页面，比如根据请求返回的数据，将没有权限的用户引导到 403 页面。
+
+
+
+### 提示性报错
+
+应用场景
+
+- 表单项校验报错。
+- 操作反馈。
+- 网络请求错误。
+
+实现
+
+关于表单项报错，请参考 [antd Form](http://ant.design/components/form-cn/) 中的实现。对于操作反馈和网络请求错误提示，有一些组件可能会用到：
+
+- [Alert](http://ant.design/components/alert-cn/)
+- [message](http://ant.design/components/message-cn/)
+- [notification](http://ant.design/components/notification-cn/)
+
+在单页应用中，最常见的需求就是处理网络错误信息，我们可以利用 message 和 notification 来吐出响应的接口/网络/业务数据错误。
+
+
+
+## 权限管理
+
+### 权限组件 Authorized
+
+这是脚手架权限管理的基础，基本思路是通过比对当前权限与准入权限，决定展示正常渲染内容还是异常内容，使用方式详见 [Authorized 文档](https://ant-design-pro.gitee.io/components/Authorized-cn/)。
+
+```jsx
+import RenderAuthorized from '@/components/Authorized';
+```
 
 
 
 
 
+### 控制菜单和路由显示
+
+如需对某些页面进行权限控制，只须在路由配置文件 [router.config.js](https://github.com/ant-design/ant-design-pro/blob/master/config/router.config.js) 中设置 `Routes` 属性即可，代表该路由的准入权限，pro 的路由系统中会默认包裹 `Authorized` 进行判断处理。
+
+```json
+  path: '/',
+  component: '../layouts/BasicLayout',
+  Routes: ['src/pages/Authorized'],
+  authority: ['admin', 'user'],
+```
+
+
+
+### 控制页面
+
+使用 [Authorized](http://pro.ant.design/components/Authorized#Authorized) 或 [Authorized.Secured](http://pro.ant.design/components/Authorized#Authorized.Secured) 可以很方便地控制元素/组件的渲染，具体使用方式参见组件文档。
+
+如果不满足权限，就跳转到403页面
+
+
+
+```jsx
+import React,{ Component } from 'react';
+import RenderAuthorized from '@/components/Authorized';
+import { Alert } from 'antd';
+
+const { Secured } = RenderAuthorized('user');
+@Secured('admin')
+class Auth extends Component {
+  render() {
+    return (
+      <div>
+        <Alert message="user Passed!" type="success" showIcon />
+      </div>
+    );
+  }
+}
+export default Auth;
+```
+
+> 不在权限范围内**@Secured('admin')**
+
+![alt](imgs\auth-page-1.png)
+
+
+
+>  在权限范围内 **@Secured(['user', 'admin'])**
+
+![alt](imgs\auth-page-2.png)
+
+
+
+### 控制页面元素显示
+
+当符合权限的时候，显示一个元素，不符合时，显示另外一个元素
+
+```jsx
+import RenderAuthorized from '@/components/Authorized';
+import { Alert } from 'antd';
+import React,{ Component } from 'react';
+
+const Authorized = RenderAuthorized('user');
+const noMatch = <Alert message="No permission1111." type="error" showIcon />;
+
+class Auth extends Component {
+  render() {
+    return (
+      <div>
+        <Authorized authority="user" noMatch={noMatch}>
+          <Alert message="user Passed!" type="success" showIcon />
+        </Authorized>
+      </div>
+    );
+  }
+}
+export default Auth;
+```
+
+
+
+### 权限API
+
+[参考文档](https://pro.ant.design/components/Authorized-cn/)
+
+*  RenderAuthorizedz
+*  Authorized
+*  Authorized.AuthorizedRoute
+*  Authorized.Secured
+*  Authorized.check
 
 
 
 
+
+### 修改当前权限
+
+脚手架中使用 `localStorage` 模拟权限角色，实际项目中可能需要从后台读取。 脚手架中实现了一个简单的刷新权限方法，在登录/注销等关键节点对当前权限进行了更新。 具体可以查看 `login.js` 中对 [reloadAuthorized ](https://github.com/ant-design/ant-design-pro/blob/c93b0169a500427ee5fdd3c2977886c86aa3d59a/src/pages/User/models/login.js#L24)的调用。
+
+
+
+## 常见问题
+
+
+
+### 如何从服务器请求菜单？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E8%8F%9C%E5%8D%95%EF%BC%9F)
+
+只需在 [BasicLayout](https://github.com/ant-design/ant-design-pro/blob/master/src/layouts/BasicLayout.js) 中更新 `this.state.menuData`, menuData 是一个 json 数组。只需服务器返回类似格式的json 即可。
+
+```js
+ [
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      icon: 'dashboard',
+      children: [
+        {
+          path: '/dashboard/analysis',
+          name: 'analysis',
+          exact: true,
+        },
+        {
+          path: '/dashboard/monitor',
+          name: 'monitor',
+          exact: true,
+        },
+        {
+          path: '/dashboard/workplace',
+          name: 'workplace',
+          exact: true,
+        },
+      ],
+    }
+    ....
+  ]
+```
+
+> 注意 path 必须要在 routre.config.js 中定义。
+
+
+
+### 如何使用图片等静态资源？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E7%AD%89%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%EF%BC%9F)
+
+可以直接使用绝对路径（需要图床支持），若需直接使用本地文件，可按以下方式引入。
+
+```jsx
+<img src={require('../assets/picture.png')} />
+```
+
+
+
+### 如何代理到后端服务器？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BB%A3%E7%90%86%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F)
+
+Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack.docschina.org/configuration/dev-server/)来支持代理。 你只需要在 config.js 中配置 proxy 属性。只要 proxy 和 mock url 不同，是可以共存的。
+
+```js
+{
+  ...
+  proxy:{
+    '/server/api/': {
+      target: 'https://preview.pro.ant.design/',
+      changeOrigin: true,
+      pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
+    },
+  },
+  ...
+}
+```
+
+在浏览器中输入 <http://localhost:8000/server/api/currentUser> 预览。
+
+
+
+### Git commit 时报错？[#](https://ant-design-pro.gitee.io/docs/faq-cn#Git-commit-%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%9F)
+
+![img](https://gw.alipayobjects.com/zos/rmsportal/KkPUhMMpGtEdhSGfxxKz.png)
+
+脚手架默认开启了 [eslint](http://eslint.org/) 代码风格检查，请按照提示内容进行修改后重新提交，也可以手动 `npm run lint` 进行检查。
+
+
+
+npm run lint 这个比较重要
 
 
 
