@@ -1,4 +1,4 @@
-# 快速入门
+# Ant Design Pro官方文档笔记
 
 
 
@@ -238,6 +238,9 @@ export default Page2;
 
 ## 和服务端进行交互
 
+* [官方文档](https://ant-design-pro.gitee.io/docs/server-cn)
+
+
 
 ### 前端请求流程
 
@@ -317,6 +320,81 @@ effects: {
 ```
 
 通过 [generator](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/function*) 和 [yield](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/yield) 使得异步调用的逻辑处理跟同步一样，更多可参看 [dva async logic](https://github.com/dvajs/dva/blob/master/docs/GettingStarted.md#async-logic)。
+
+
+
+### 具体实例
+
+
+
+#### 1：制作一个页面
+
+制作一个Dva页面，并在**router.config.js**中配置页面链接： /fanhl/dva
+
+
+
+#### 2：Mock模拟API
+
+详细代码，见Mock章节。
+
+Mock做完后，可以通过API 来测试一下是否可以访问。
+
+```js
+const proxy = {
+  // 返回一个数组
+  'GET /api/fanhl/user': user,
+  // 返回一个json对象
+  'GET /api/fanhl/getNotice': getNotice,
+  // 支持自定义函数，API 参考 express@4
+  'GET /api/fanhl/create': (req, res) => {
+    res.end('OK');
+  },
+  // 返回一个外部json文件
+  'GET /api/fanhl/getRoles': getRoles,
+  // 通过request参数从数组中获得数据
+  // http://localhost:8000/api/fanhl/getRolesById?roleId=1
+  'GET /api/fanhl/getRolesById': getRolesById,
+  // 在一个函数中调用了Mock
+  'GET /api/fanhl/getMockList': getMockList,
+  // 静态的 只随机一次
+  'GET /api/fanhl/random1': Mock.mock({ 'number|1-100': 100 }),
+  // 动态的 每次请求均产生随机值
+  'GET /api/fanhl/random2': (req, res) => {
+    res.send(Mock.mock({ 'number|1-100': 100 }));
+  },
+};
+```
+
+#### 3：定义services文件
+
+```jsx
+import request from '@/utils/request';
+
+export async function queryUser() {
+  return request('/api/fanhl/user');
+}
+
+export async function getNotice() {
+  return request('/api/fanhl/getNotice');
+}
+```
+
+
+
+#### 4: 定义Model
+
+* 在相应的page目录下，建立一个子目录：models
+* 在models目录下，建立相应的model文件，例如fanhl.js
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -962,7 +1040,7 @@ export default Auth;
 
 
 
-### 如何从服务器请求菜单？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E8%8F%9C%E5%8D%95%EF%BC%9F)
+### 如何从服务器请求菜单？
 
 只需在 [BasicLayout](https://github.com/ant-design/ant-design-pro/blob/master/src/layouts/BasicLayout.js) 中更新 `this.state.menuData`, menuData 是一个 json 数组。只需服务器返回类似格式的json 即可。
 
@@ -998,7 +1076,7 @@ export default Auth;
 
 
 
-### 如何使用图片等静态资源？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E7%AD%89%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%EF%BC%9F)
+### 如何使用图片等静态资源？
 
 可以直接使用绝对路径（需要图床支持），若需直接使用本地文件，可按以下方式引入。
 
@@ -1008,7 +1086,7 @@ export default Auth;
 
 
 
-### 如何代理到后端服务器？[#](https://ant-design-pro.gitee.io/docs/faq-cn#%E5%A6%82%E4%BD%95%E4%BB%A3%E7%90%86%E5%88%B0%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F)
+### 如何代理到后端服务器？
 
 Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack.docschina.org/configuration/dev-server/)来支持代理。 你只需要在 config.js 中配置 proxy 属性。只要 proxy 和 mock url 不同，是可以共存的。
 
@@ -1030,7 +1108,7 @@ Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack
 
 
 
-### Git commit 时报错？[#](https://ant-design-pro.gitee.io/docs/faq-cn#Git-commit-%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%9F)
+### Git commit 时报错？
 
 ![img](https://gw.alipayobjects.com/zos/rmsportal/KkPUhMMpGtEdhSGfxxKz.png)
 
@@ -1038,7 +1116,80 @@ Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack
 
 
 
-npm run lint 这个比较重要
+npm run lint 这个比较重要，出现错误的时候，执行这个命令
+
+
+
+## DVA 初步解释
+
+[官方网址](https://dvajs.com/guide/introduce-class.html#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE)
+
+
+
+![alt](https://zos.alipayobjects.com/rmsportal/hUFIivoOFjVmwNXjjfPE.png)
+
+
+
+### 核心概念
+
+- State：一个对象，保存整个应用状态
+- View：React 组件构成的视图层
+- Action：一个对象，描述事件
+- connect 方法：一个函数，绑定 State 到 View
+- dispatch 方法：一个函数，发送 Action 到 State
+
+
+
+### State 和 View
+
+State 是储存数据的地方，收到 Action 以后，会更新数据。
+
+View 就是 React 组件构成的 UI 层，从 State 取数据后，渲染成 HTML 代码。只要 State 有变化，View 就会自动更新。
+
+
+
+### Action
+
+Action 是用来描述 UI 层事件的一个对象。
+
+```js
+{
+  type: 'click-submit-button',
+  payload: this.form.data
+}
+```
+
+### connect 方法
+
+connect 是一个函数，绑定 State 到 View。
+
+```js
+import { connect } from 'dva';
+
+function mapStateToProps(state) {
+  return { todos: state.todos };
+}
+connect(mapStateToProps)(App);
+```
+
+connect 方法返回的也是一个 React 组件，通常称为容器组件。因为它是原始 UI 组件的容器，即在外面包了一层 State。
+
+connect 方法传入的第一个参数是 mapStateToProps 函数，mapStateToProps 函数会返回一个对象，用于建立 State 到 Props 的映射关系。
+
+### dispatch 方法
+
+dispatch 是一个函数方法，用来将 Action 发送给 State。
+
+```js
+dispatch({
+  type: 'click-submit-button',
+  payload: this.form.data
+})
+```
+
+dispatch 方法从哪里来？被 connect 的 Component 会自动在 props 中拥有 dispatch 方法。
+
+
 
 
 
