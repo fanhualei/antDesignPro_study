@@ -294,5 +294,295 @@ export default Toggle;
 
 ```
 
+## React 条件渲染
+
+[官方文档](http://www.runoob.com/react/react-conditional-rendering.html)
+
+* 可以通过If语句来判断显示什么内容。
+* JavaScript 的逻辑与 &&，它可以方便地条件渲染一个元素。
+* 通过三目运算符：condition ? true : false。
+* 阻止组件渲染
+
+
+
+### 阻止组件渲染
+
+在极少数情况下，你可能希望隐藏组件，即使它被其他组件渲染。让 render 方法返回 null 而不是它的渲染结果即可实现。
+
+在下面的例子中，**<WarningBanner />** 根据属性 warn 的值条件渲染。如果 warn 的值是 false，则组件不会渲染：
+
+```jsx
+import React from 'react';
+
+// 定义一个警告组件
+function WarningBanner(props) {
+  const {warn}=props;
+  if (!warn) {
+    return null;
+  }
+  return (
+    <div className="warning">
+      ---------警告!---------
+    </div>
+  );
+}
+
+class Warning extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true}
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  handleToggleClick() {
+    this.setState(prevState => ({
+      showWarning: !prevState.showWarning
+    }));
+  }
+
+  render() {
+    const {showWarning}=this.state;
+    return (
+      <div>
+        <div>阻止组件渲染的例子</div>
+        <WarningBanner warn={showWarning} />
+        <button type='button' onClick={this.handleToggleClick}>
+          {showWarning ? '隐藏' : '显示'}
+        </button>
+      </div>
+    );
+  }
+}
+
+export default Warning;
+```
+
+组件的 render 方法返回 null 并不会影响该组件生命周期方法的回调。例如，componentWillUpdate 和 componentDidUpdate 依然可以被调用。
+
+
+
+## React 列表 & Keys
+
+* 每个列表元素分配一个 key，不然会出现警告
+* 一个元素的 key 最好是这个元素在列表中拥有的一个独一无二的字符串。通常，我们使用来自数据的 id 作为元素的 key
+* 元素的 key 只有在它和它的兄弟节点对比时才有意义。如果你提取出一个 ListItem 组件，你应该把 key 保存在数组中的这个 **<ListItem />** 元素上，而不是放在 ListItem 组件中的 **<li>** 元素上。
+* 元素的 key 在他的兄弟元素之间应该唯一
+* key 会作为给 React 的提示，但不会传递给你的组件。如果您的组件中需要使用和 key 相同的值，请将其作为属性传递
+
+
+
+[官方文档](http://www.runoob.com/react/react-lists-and-keys.html)
+
+
+
+```jsx
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li key={number.toString()}>
+    {number}
+  </li>
+);
+```
+
+
+
+##  React 组件 API
+
+在本章节中我们将讨论 React 组件 API。我们将讲解以下7个方法:
+
+- 设置状态：setState
+- 替换状态：replaceState
+- 设置属性：setProps
+- 替换属性：replaceProps
+- 强制更新：forceUpdate
+- 获取DOM节点：findDOMNode
+- 判断组件挂载状态：isMounted 方法在 ES6 中已经废除
+
+[详细内容](http://www.runoob.com/react/react-component-api.html)
+
+
+
+## React AJAX
+
+React 组件的数据可以通过 **componentDidMount** 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI。
+
+当使用异步加载数据时，在组件卸载前使用 **componentWillUnmount** 来取消未完成的请求。
+
+在AntDesignPro中，有自己特殊的处理模式。
+
+
+
+## React 表单与事件
+
+
+
+### 一个简单的实例
+
+在实例中我们设置了输入框 input 值 **value = {this.state.data}**。在输入框值发生变化时我们可以更新 state。我们可以使用 **onChange** 事件来监听 input 的变化，并修改 state。
+
+```jsx
+import React from 'react';
+
+class HelloMessage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'Hello Runoob!'};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+  
+  render() {
+    const {value} = this.state;
+    return (
+      <div>
+        <h1>React 表单与事件:</h1>
+        <input type="text" value={value} onChange={this.handleChange} />
+        <h4>{value}</h4>
+      </div>
+    );
+  }
+}
+
+export default HelloMessage;
+```
+
+
+
+### 在子组件上使用表单
+
+在以下实例中我们将为大家演示如何在子组件上使用表单。 **onChange** 方法将触发 state 的更新并将更新的值传递到子组件的输入框的 **value** 上来重新渲染界面。
+
+你需要在父组件通过创建事件句柄 (**handleChange**) ，并作为 prop (**updateStateProp**) 传递到你的子组件上。
+
+```jsx
+import React from 'react';
+
+function Content(props) {
+  const {myDataProp,updateStateProp}=props;
+  return(
+    <div>
+      <input type="text" value={myDataProp} onChange={updateStateProp} />
+      <h4>{myDataProp}</h4>
+    </div>
+  );
+}
+
+class HelloMessage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'Hello Runoob!'};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  render() {
+    const {value} = this.state;
+    return (
+      <div>
+        <h1>React 表单与事件:</h1>
+        <Content
+          myDataProp={value}
+          updateStateProp={this.handleChange}
+        />
+      </div>
+    );
+  }
+}
+
+export default HelloMessage;
+```
+
+
+
+## Select 下拉菜单
+
+在 React 中，不使用 selected 属性，而在根 select 标签上用 value 属性来表示选中项。
+
+```jsx
+import React from 'react';
+
+class FlavorForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'coconut'};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    const {value}=this.state;
+    alert(value);
+    event.preventDefault();
+  }
+
+  render() {
+    const {value}=this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        选择您最喜欢的网站
+        <select value={value} onChange={this.handleChange}>
+          <option value="gg">Google</option>
+          <option value="rn">Runoob</option>
+          <option value="tb">Taobao</option>
+          <option value="fb">Facebook</option>
+        </select>
+        <input type="submit" value="提交" />
+      </form>
+    );
+  }
+}
+
+export default FlavorForm;
+```
+
+
+
+## React Refs
+
+refs 就相当于jquery中的id，能快速定位到组件。
+
+```jsx
+class MyComponent extends React.Component {
+  handleClick() {
+    // 使用原生的 DOM API 获取焦点
+    this.refs.myInput.focus();
+  }
+  render() {
+    //  当组件插入到 DOM 后，ref 属性添加一个组件的引用于到 this.refs
+    return (
+      <div>
+        <input type="text" ref="myInput" />
+        <input
+          type="button"
+          value="点我输入框获取焦点"
+          onClick={this.handleClick.bind(this)}
+        />
+      </div>
+    );
+  }
+}
+export default MyComponent;
+```
+
+
+
+
+
+
+
+
+
+
+
 
 

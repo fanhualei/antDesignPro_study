@@ -33,7 +33,8 @@ https://ant.design/docs/react/introduce-cn
   * [git的使用](doc/git.md)
 * 基础知识
   * [官方文档笔记](doc/first.md)
-  * [React笔记](doc/react.md)
+  * [菜鸟网络-React笔记](doc/react.md)
+  * [React官方学习笔记](doc/react-pro.md)
 * [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle
