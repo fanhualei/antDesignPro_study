@@ -21,12 +21,6 @@ https://ant.design/docs/react/introduce-cn
 
 
 
-我想了解一下，设计规范，例如controller的删除函数，与查询函数是否是一个．
-
-
-
-
-
 * 环境搭建
   * [下载代码](doc/start.md)
   * [webStorm使用](doc/webstorm.md)
@@ -35,6 +29,10 @@ https://ant.design/docs/react/introduce-cn
   * [官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
   * [React官方学习笔记](doc/react-pro.md)
+    * [做一个小的游戏](doc/game.md)
+  * [学习readux](doc/redux.md)
+  * [了解dva](doc/dva.md)
+  * [制作一个添加删除的例子](doc/curd.md)
 * [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle
