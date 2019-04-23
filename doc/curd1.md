@@ -2,6 +2,18 @@
 
 
 
+## eslint 注释
+
+`/* eslint react/no-multi-comp:0 */`
+
+在写代码的时候，有些会报错，这时候，可以使用eslint注释，来禁止报错。
+
+[eslint 常用配置](http://www.mamicode.com/info-detail-2291421.html)
+
+
+
+
+
 ## 功能设计
 
 基本UI设计
@@ -526,5 +538,553 @@ const rowSelection = {
 
 ### 指定每页的页数
 
+在table控件中指定pagination
 
+```jsx
+<Table
+  bordered
+  dataSource={data.list}
+  rowSelection={rowSelection}
+  columns={this.columns}
+  onChange={this.handleStandardTableChange}
+  pagination={paginationProps}
+/>
+```
+
+定义paginationprops
+
+```jsx
+const paginationProps = {
+  showSizeChanger: true,
+  showQuickJumper: true,
+  ...pagination,
+};
+```
+
+
+
+### 使用Ant Design Pro的Table控件
+
+用法的区别
+
+```jsx
+
+<Table
+  bordered
+  dataSource={data.list}
+  rowSelection={rowSelection}
+  columns={this.columns}
+  onChange={this.handleStandardTableChange}
+  pagination={paginationProps}
+/>
+<StandardTable
+  selectedRows={selectedRows}
+  data={data}
+  columns={this.columns}
+  onSelectRow={this.handleSelectRows}
+  onChange={this.handleStandardTableChange}
+/>
+```
+
+
+
+* StandardTable 中多了 `selectedRows`与`onSelectRow`
+* 少了：`rowSelection`,`paginationProps`
+
+```jsx
+state = {
+  expandForm: false,
+  formValues: {},
+  selectedRows: [],
+};
+
+---------------------------------
+    
+const { selectedRows } = this.state;
+
+---------------------------------
+
+handleSelectRows = rows => {
+  this.setState({
+    selectedRows: rows,
+  });
+};    
+
+
+```
+
+
+
+#### 禁止选择某些项目
+
+如果在记录中有disabled的记录，那么就禁止选择
+
+```jsx
+const rowSelection = {
+  selectedRowKeys,
+  onChange: this.handleRowSelectChange,
+  getCheckboxProps: record => ({
+    disabled: record.disabled,
+  }),
+};
+```
+
+
+
+## 编辑功能
+
+
+
+###  新增功能
+
+
+
+#### 定义一个弹出界面
+
+使用了[Modal对话框](https://ant.design/components/modal-cn/)，官方文档中有介绍，提交服务器后，异步关闭对话框的功能。
+
+这个对话框有4个输入项目：
+
+* modalVisible 是否显示与关闭对话框
+* form：在Form.create()得到的form对象。
+* handleAdd：父窗口传入的回调函数，用来追加一条记录
+  * 校验输入项目
+  * 清空输入框
+  * 调用父窗口的追加函数
+* handleModalVisible：父窗口传入的回调函数，用来关闭窗口
+
+
+
+```jsx
+const CreateForm = Form.create()(props => {
+  const { modalVisible, form, handleAdd, handleModalVisible } = props;
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      form.resetFields();
+      handleAdd(fieldsValue);
+    });
+  };
+  return (
+    <Modal
+      destroyOnClose
+      title="新建规则"
+      visible={modalVisible}
+      onOk={okHandle}
+      onCancel={() => handleModalVisible()}
+    >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
+        {form.getFieldDecorator('desc', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+    </Modal>
+  );
+});
+```
+
+
+
+#### 在父窗口中引用这个Form
+
+这里定义了两个要传入的参数
+
+```jsx
+const parentMethods = {
+  handleAdd: this.handleAdd,
+  handleModalVisible: this.handleModalVisible,
+};
+
+<CreateForm {...parentMethods} modalVisible={modalVisible} />
+```
+
+定义两个函数
+
+```jsx
+handleModalVisible = flag => {
+  this.setState({
+    modalVisible: !!flag,
+  });
+};
+handleAdd = fields => {
+  const { dispatch } = this.props;
+  dispatch({
+    type: 'fanhlRule/add',
+    payload: {
+      desc: fields.desc,
+    },
+  });
+  message.success('添加成功');
+  this.handleModalVisible();
+};
+```
+
+
+
+### 配置（多步编辑）功能
+
+
+
+#### 定义一个form窗口
+
+```jsx
+
+@Form.create()
+class UpdateForm extends PureComponent {
+  static defaultProps = {
+    handleUpdate: () => {},
+    handleUpdateModalVisible: () => {},
+    values: {},
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formVals: {
+        name: props.values.name,
+        desc: props.values.desc,
+        key: props.values.key,
+        target: '0',
+        template: '0',
+        type: '1',
+        time: '',
+        frequency: 'month',
+      },
+      currentStep: 0,
+    };
+
+    this.formLayout = {
+      labelCol: { span: 7 },
+      wrapperCol: { span: 13 },
+    };
+  }
+
+  handleNext = currentStep => {
+    const { form, handleUpdate } = this.props;
+    const { formVals: oldValue } = this.state;
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      const formVals = { ...oldValue, ...fieldsValue };
+      this.setState(
+        {
+          formVals,
+        },
+        () => {
+          if (currentStep < 2) {
+            this.forward();
+          } else {
+            handleUpdate(formVals);
+          }
+        }
+      );
+    });
+  };
+
+  backward = () => {
+    const { currentStep } = this.state;
+    this.setState({
+      currentStep: currentStep - 1,
+    });
+  };
+
+  forward = () => {
+    const { currentStep } = this.state;
+    this.setState({
+      currentStep: currentStep + 1,
+    });
+  };
+
+  renderContent = (currentStep, formVals) => {
+    const { form } = this.props;
+    if (currentStep === 1) {
+      return [
+        <FormItem key="target" {...this.formLayout} label="监控对象">
+          {form.getFieldDecorator('target', {
+            initialValue: formVals.target,
+          })(
+            <Select style={{ width: '100%' }}>
+              <Option value="0">表一</Option>
+              <Option value="1">表二</Option>
+            </Select>
+          )}
+        </FormItem>,
+        <FormItem key="template" {...this.formLayout} label="规则模板">
+          {form.getFieldDecorator('template', {
+            initialValue: formVals.template,
+          })(
+            <Select style={{ width: '100%' }}>
+              <Option value="0">规则模板一</Option>
+              <Option value="1">规则模板二</Option>
+            </Select>
+          )}
+        </FormItem>,
+        <FormItem key="type" {...this.formLayout} label="规则类型">
+          {form.getFieldDecorator('type', {
+            initialValue: formVals.type,
+          })(
+            <RadioGroup>
+              <Radio value="0">强</Radio>
+              <Radio value="1">弱</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>,
+      ];
+    }
+    if (currentStep === 2) {
+      return [
+        <FormItem key="time" {...this.formLayout} label="开始时间">
+          {form.getFieldDecorator('time', {
+            rules: [{ required: true, message: '请选择开始时间！' }],
+          })(
+            <DatePicker
+              style={{ width: '100%' }}
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="选择开始时间"
+            />
+          )}
+        </FormItem>,
+        <FormItem key="frequency" {...this.formLayout} label="调度周期">
+          {form.getFieldDecorator('frequency', {
+            initialValue: formVals.frequency,
+          })(
+            <Select style={{ width: '100%' }}>
+              <Option value="month">月</Option>
+              <Option value="week">周</Option>
+            </Select>
+          )}
+        </FormItem>,
+      ];
+    }
+    return [
+      <FormItem key="name" {...this.formLayout} label="规则名称">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入规则名称！' }],
+          initialValue: formVals.name,
+        })(<Input placeholder="请输入" />)}
+      </FormItem>,
+      <FormItem key="desc" {...this.formLayout} label="规则描述">
+        {form.getFieldDecorator('desc', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
+          initialValue: formVals.desc,
+        })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
+      </FormItem>,
+    ];
+  };
+
+  renderFooter = currentStep => {
+    const { handleUpdateModalVisible, values } = this.props;
+    if (currentStep === 1) {
+      return [
+        <Button key="back" style={{ float: 'left' }} onClick={this.backward}>
+          上一步
+        </Button>,
+        <Button key="cancel" onClick={() => handleUpdateModalVisible(false, values)}>
+          取消
+        </Button>,
+        <Button key="forward" type="primary" onClick={() => this.handleNext(currentStep)}>
+          下一步
+        </Button>,
+      ];
+    }
+    if (currentStep === 2) {
+      return [
+        <Button key="back" style={{ float: 'left' }} onClick={this.backward}>
+          上一步
+        </Button>,
+        <Button key="cancel" onClick={() => handleUpdateModalVisible(false, values)}>
+          取消
+        </Button>,
+        <Button key="submit" type="primary" onClick={() => this.handleNext(currentStep)}>
+          完成
+        </Button>,
+      ];
+    }
+    return [
+      <Button key="cancel" onClick={() => handleUpdateModalVisible(false, values)}>
+        取消
+      </Button>,
+      <Button key="forward" type="primary" onClick={() => this.handleNext(currentStep)}>
+        下一步
+      </Button>,
+    ];
+  };
+
+  render() {
+    const { updateModalVisible, handleUpdateModalVisible, values } = this.props;
+    const { currentStep, formVals } = this.state;
+
+    return (
+      <Modal
+        width={640}
+        bodyStyle={{ padding: '32px 40px 48px' }}
+        destroyOnClose
+        title="规则配置"
+        visible={updateModalVisible}
+        footer={this.renderFooter(currentStep)}
+        onCancel={() => handleUpdateModalVisible(false, values)}
+        afterClose={() => handleUpdateModalVisible()}
+      >
+        <Steps style={{ marginBottom: 28 }} size="small" current={currentStep}>
+          <Step title="基本信息" />
+          <Step title="配置规则属性" />
+          <Step title="设定调度周期" />
+        </Steps>
+        {this.renderContent(currentStep, formVals)}
+      </Modal>
+    );
+  }
+}
+```
+
+
+
+#### 在父窗口引用这个功能
+
+```jsx
+
+const updateMethods = {
+  handleUpdateModalVisible: this.handleUpdateModalVisible,
+  handleUpdate: this.handleUpdate,
+};
+
+
+{stepFormValues && Object.keys(stepFormValues).length ? (
+  <UpdateForm
+    {...updateMethods}
+    updateModalVisible={updateModalVisible}
+    values={stepFormValues}
+  />
+) : null}
+```
+
+
+
+并且定义两个函数，并将函数传递到子窗口
+
+```jsx
+handleModalVisible = flag => {
+  this.setState({
+    modalVisible: !!flag,
+  });
+};
+
+handleUpdate = fields => {
+  const { dispatch } = this.props;
+  const { formValues } = this.state;
+  dispatch({
+    type: 'fanhlRule/update',
+    payload: {
+      query: formValues,
+      body: {
+        name: fields.name,
+        desc: fields.desc,
+        key: fields.key,
+      },
+    },
+  });
+  message.success('配置成功');
+  this.handleUpdateModalVisible();
+};
+```
+
+
+
+### 添加批量操作
+
+#### 添加相关按钮
+
+如果有选择项目，就显示相关内容
+
+```jsx
+{selectedRows.length > 0 && (
+  <span>
+    <Button>批量操作</Button>
+    <Dropdown overlay={menu}>
+      <Button>
+        更多操作 <Icon type="down" />
+      </Button>
+    </Dropdown>
+  </span>
+)}
+```
+
+制作一个下拉菜单，并调用相关函数
+
+```jsx
+const menu = (
+  <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+    <Menu.Item key="remove">删除</Menu.Item>
+    <Menu.Item key="approval">批量审批</Menu.Item>
+  </Menu>
+);
+```
+
+#### 相关函数
+
+这个地方有一个回调函数
+
+```jsx
+handleMenuClick = e => {
+  const { dispatch } = this.props;
+  const { selectedRows } = this.state;
+  if (selectedRows.length === 0) return;
+  switch (e.key) {
+    case 'remove':
+      dispatch({
+        type: 'rule/remove',
+        payload: {
+          key: selectedRows.map(row => row.key),
+        },
+        callback: () => {
+          this.setState({
+            selectedRows: [],
+          });
+        },
+      });
+      break;
+    default:
+      break;
+  }
+};
+```
+
+
+
+### dispatch 异步的回调函数
+
+在这个可以判断与服务器的交互是否成功
+
+#### 在UI界面上，要给出callback回调函数
+
+```jsx
+dispatch({
+  type: 'fanhlRule/remove',
+  payload: {
+    key: selectedRows.map(ro
+  },
+  callback: (res) => {
+    console.log(res)
+    this.setState({
+      selectedRows: [],
+    });
+  },
+});
+```
+
+
+
+#### 在model类中，回调这个函数
+
+```jsx
+*remove({ payload, callback }, { call, put }) {
+  const response = yield call(removeRule, payload);
+  yield put({
+    type: 'save',
+    payload: response,
+  });
+  if (callback) callback(response);
+},
+```
 
