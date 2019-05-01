@@ -2,10 +2,6 @@
 
 [TOC]
 
-
-
-
-
 ## React 哲学-开发思路
 
 [原文](https://zh-hans.reactjs.org/docs/thinking-in-react.html)
