@@ -21,18 +21,26 @@ https://ant.design/docs/react/introduce-cn
 
 
 
-* 环境搭建
+* 环境搭建（搭建可以开发的环境）
   * [下载代码](doc/start.md)
   * [webStorm使用](doc/webstorm.md)
   * [git的使用](doc/git.md)
-* 基础知识
-  * [官方文档笔记](doc/first.md)
+* 基础知识（学习基础知识，并做两个小例子）
+  * [Ant Design Pro官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
   * [React官方学习笔记](doc/react-pro.md)
     * [做一个小的游戏](doc/game.md)
   * [学习readux](doc/redux.md)
   * [了解dva](doc/dva.md)
   * [制作一个添加删除的例子](doc/curd.md)
+* 登陆-权限-菜单
+  * 登陆
+  * 权限
+* [布局](doc/layout.md)
+* [菜单](doc/menu.md)
+* 单元测试jtest
+* 跨域的处理：
+  * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
 * [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle
