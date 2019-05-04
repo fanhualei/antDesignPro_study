@@ -34,15 +34,14 @@ https://ant.design/docs/react/introduce-cn
   * [学习readux](doc/redux.md)
   * [了解dva](doc/dva.md)
   * [制作一个添加删除的例子](doc/curd.md)
-* 登陆-权限-菜单
-  * 登陆
-  * 权限
-* [布局](doc/layout.md)
-* [菜单](doc/menu.md)
-* [PageHeaderWrapper](doc/PageHeaderWrapper.md)
-* 单元测试jtest
-* 跨域的处理：
-  * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
+* antDesignPro
+  * [布局](doc/layout.md)
+  * [菜单](doc/menu.md)
+  * [PageHeaderWrapper](doc/PageHeaderWrapper.md)
+  * [Form相关](doc/form.md)
+  * 单元测试jtest
+  * 跨域的处理：
+    * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
 * [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle
