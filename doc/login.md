@@ -1,3 +1,9 @@
+
+
+
+
+
+
 # 登陆逻辑
 
 
@@ -120,31 +126,20 @@ return {
 
 ### 登出 logout
 
-
-
-
+* 在`BasicLayout`中的`Header`,菜单中，有logout功能，调用了`login/logout`
+* `user`的model，将status设置成false，并将Authority设置成`guset`，当推出后，将当前页面赋值到regist
 
 
 
 ### 自动登陆 AutoLogin
 
+还没有实现。一般使用cookie来实现。
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-## 注释
-
-
+### 关于获得注册码功能
 
 Promise  then catch
 
@@ -170,10 +165,189 @@ Promise  then catch
 
 
 
-
-
-d.ts 文件
+# 注册逻辑
 
 
 
-static defaultProps  作用
+![alt](imgs/register.png)
+
+
+
+## Service模块
+
+> mock 模拟数据
+
+
+
+```jsx
+'POST /api/register': (req, res) => {
+  res.send({ status: 'ok', currentAuthority: 'user' });
+},
+```
+
+
+
+
+
+> service 
+
+```jsx
+export async function fakeRegister(params) {
+  return request('/api/register', {
+    method: 'POST',
+    data: params,
+  });
+}
+```
+
+
+
+## Model模块
+
+当登陆成功后，就设置`Authority`并重新`reloadAuthorized()`
+
+```jsx
+state: {
+  status: undefined,
+},
+effects: {
+  *submit({ payload }, { call, put }) {
+    const response = yield call(fakeRegister, payload);
+    yield put({
+      type: 'registerHandle',
+      payload: response,
+    });
+  },
+},
+reducers: {
+  registerHandle(state, { payload }) {
+    setAuthority('user');
+    reloadAuthorized();
+    return {
+      ...state,
+      status: payload.status,
+    };
+  },
+},
+```
+
+
+
+
+
+## UI模块
+
+
+
+### 提交模块
+
+prefix是电话好码的前缀
+
+```jsx
+handleSubmit = e => {
+  e.preventDefault();
+  const { form, dispatch } = this.props;
+  form.validateFields({ force: true }, (err, values) => {
+    if (!err) {
+      const { prefix } = this.state;
+      dispatch({
+        type: 'register/submit',
+        payload: {
+          ...values,
+          prefix,
+        },
+      });
+    }
+  });
+};
+```
+
+
+
+### 提交后跳转页
+
+`componentDidUpdate` 在组件完成更新后立即调用。在初始化时不会被调用。
+
+如果发现是ok，就跳转到成功页面。 当然这个也可以在model中来实现。
+
+另外在整个注册过程中，没有考虑到以下情况：
+
+* email已经存在。
+* 出现错误时，应该怎么提示。
+
+```jsx
+componentDidUpdate() {
+  const { form, register } = this.props;
+  const account = form.getFieldValue('mail');
+  if (register.status === 'ok') {
+    router.push({
+      pathname: '/user/register-result',
+      state: {
+        account,
+      },
+    });
+  }
+}
+
+```
+
+
+
+
+
+### 密码校验
+
+有两个属性`help`与`visible`，分别用来提示错误与控制提示car的显示。
+
+`callback`正常返回与错误返回可以学习`callback('error')`
+
+
+
+``` jsx
+checkPassword = (rule, value, callback) => {
+  const { visible, confirmDirty } = this.state;
+  if (!value) {
+    this.setState({
+      help: formatMessage({ id: 'validation.password.required' }),
+      visible: !!value,
+    });
+    callback('error');
+  } else {
+    this.setState({
+      help: '',
+    });
+    if (!visible) {
+      this.setState({
+        visible: !!value,
+      });
+    }
+    if (value.length < 6) {
+      callback('error');
+    } else {
+      const { form } = this.props;
+      if (value && confirmDirty) {
+        form.validateFields(['confirm'], { force: true });
+      }
+      callback();
+    }
+  }
+};
+```
+
+
+
+
+
+# 其他技巧
+
+
+
+不让chrome自动将用户名与密码填写进去：
+
+**autoComplete="new-password"**
+
+```jsx
+<Password autoComplete="new-password" />
+<Input autoComplete="new-password" />
+```
+
