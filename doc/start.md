@@ -1,5 +1,7 @@
 # 初始化代码
 
+[TOC]
+
 
 
 参考了官方网址：https://ant-design-pro.gitee.io/docs/getting-started-cn
@@ -58,3 +60,19 @@ $ npm start
 ![img](https://gw.alipayobjects.com/zos/rmsportal/uHAzKpIQDMGdmjIxZLOV.png)
 
 启动完成后会自动打开浏览器访问 [http://localhost:8000](http://localhost:8000/)，你看到下面的页面就代表成功了。
+
+
+
+## 如何及时更新最新版本
+
+当开发一段时间后，可能要更新pro的最新版本，这时候怎么办呢？
+
+* git pull from pro的官方git服务器
+  * 中间需要merge
+* 下载完毕后，执行`npm install`
+* 然后执行`npm run lint`，这时候可能出现错误
+  * 原因一：自己添加的第三方组件，这时候需要自己添加。例如`npm install react-quill`
+  * 原因二: 其他原因，自己按照提示进行修改。
+* 当执行没有问题后，就run，看程序是否能跑起来。
+* 如果能跑起来，就commit到git中。
+

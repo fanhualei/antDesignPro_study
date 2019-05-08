@@ -25,6 +25,7 @@ https://ant.design/docs/react/introduce-cn
   * [下载代码](doc/start.md)
   * [webStorm使用](doc/webstorm.md)
   * [git的使用](doc/git.md)
+  * [如何及时更新最新版本](doc/start.md#如何及时更新最新版本)
 * 基础知识（学习基础知识，并做两个小例子）
   * [Ant Design Pro官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
@@ -35,13 +36,16 @@ https://ant.design/docs/react/introduce-cn
   * [了解dva](doc/dva.md)
   * [制作一个添加删除的例子](doc/curd.md)
 * antDesignPro
+  * [登陆login](doc/login.md)
   * [布局](doc/layout.md)
   * [菜单](doc/menu.md)
+  * [如何通过服务来控制菜单](doc/menuAuth.md)
   * [PageHeaderWrapper](doc/PageHeaderWrapper.md)
   * [Form相关](doc/form.md)
   * 单元测试jtest
   * 跨域的处理：
     * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
+* [正常项目需要做的工作](doc/myproject.md)
 * [快速入门](doc/first.md)
   * 添加一个新页面
   * 添加一个modle

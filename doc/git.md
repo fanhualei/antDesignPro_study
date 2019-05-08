@@ -46,7 +46,7 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 ```
 git remote rm origin 
-git remote add origin https://fanhualei:madengxia123@github.com/fanhualei/antDesignPro_study.git
+git remote add origin https://fanhualei:ma123@github.com/fanhualei/antDesignPro_study.git
 
 ```
 
