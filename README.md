@@ -4,8 +4,6 @@
 
 > 目录
 
-
-
 ```
 常用网址
 https://github.com/ant-design/ant-design-pro/tree/master/src/pages
@@ -19,13 +17,12 @@ https://ant.design/docs/react/introduce-cn
 
 
 
-
-
 * 环境搭建（搭建可以开发的环境）
   * [下载代码](doc/start.md)
   * [webStorm使用](doc/webstorm.md)
   * [git的使用](doc/git.md)
   * [如何及时更新最新版本](doc/start.md#如何及时更新最新版本)
+  * [Axure设计](doc/axure.md)
 * 基础知识（学习基础知识，并做两个小例子）
   * [Ant Design Pro官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
@@ -36,25 +33,20 @@ https://ant.design/docs/react/introduce-cn
   * [了解dva](doc/dva.md)
   * [制作一个添加删除的例子](doc/curd.md)
 * antDesignPro
-  * [登陆login](doc/login.md)
+  * [登陆与注册](doc/login.md)
   * [布局](doc/layout.md)
   * [菜单](doc/menu.md)
   * [如何通过服务来控制菜单](doc/menuAuth.md)
   * [PageHeaderWrapper](doc/PageHeaderWrapper.md)
   * [Form相关](doc/form.md)
+  * [样式相关](doc/less.md)
+  * 网友的学习笔记
+    * [Ant Design Pro总结篇](https://www.codercto.com/a/26106.html)
   * 单元测试jtest
   * 跨域的处理：
     * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
 * [正常项目需要做的工作](doc/myproject.md)
 * [快速入门](doc/first.md)
-  * 添加一个新页面
-  * 添加一个modle
-  * 配置多语言文件
-  * 调用远程Rest API
-  * 使用外部React组建
-  * 跨域的问题
-  * 如何切换mock与真实环境
-  * 如何保存缓存
 * 例子代码分析
   * [表单页](doc/example.md)
   * [列表页](doc/example-list.md)
@@ -64,13 +56,6 @@ https://ant.design/docs/react/introduce-cn
   * [dashboard](./doc/example-dashboard.md)
   * 登录注册
   * 顶部导航与设置
-* API交互
-  * 查询一个列表
-  * 查询一个分页列表
-  * 带参数的查询
-  * 通过Json新增或更新记录
-  * 删除一条记录
-  * 复制查询条件的查询
 * 预备知识
   * [dva](doc\dva.md)
 * 高级应用
@@ -96,41 +81,6 @@ https://ant.design/docs/react/introduce-cn
 
 
 
-
-
-
-
-## 环境搭建
-
-```
-如何搭建一个初始的环境
-```
-
-
-
-## 添加一个新页面
-
-```
-按照基础表单页面，添加一个新的页面
-```
-
-
-
-
-
-## 疑问
-
-
-
-> Row 与Col 怎么用？
-
-
-
-```
-<Form layout="vertical" hideRequiredMark>
-   <Row gutter={16}>
-   <Col lg={6} md={12} sm={24}>
-```
 
 
 
