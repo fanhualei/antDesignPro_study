@@ -23,6 +23,8 @@ https://ant.design/docs/react/introduce-cn
   * [git的使用](doc/git.md)
   * [如何及时更新最新版本](doc/start.md#如何及时更新最新版本)
   * [Axure设计](doc/axure.md)
+  * 调试插件
+    * [redux-devtools调试工具](https://github.com/zalmoxisus/redux-devtools-extension)
 * 基础知识（学习基础知识，并做两个小例子）
   * [Ant Design Pro官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
@@ -41,7 +43,9 @@ https://ant.design/docs/react/introduce-cn
   * [Form相关](doc/form.md)
   * [样式相关](doc/less.md)
   * 网友的学习笔记
+    * [Ant Design 实战教程（beta 版）](https://www.yuque.com/ant-design/course)
     * [Ant Design Pro总结篇](https://www.codercto.com/a/26106.html)
+    * [跨域处理](doc/cors.md)
   * 单元测试jtest
   * 跨域的处理：
     * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
