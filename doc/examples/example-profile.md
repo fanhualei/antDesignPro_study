@@ -110,7 +110,7 @@ Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack
 
 
 
-![alt](imgs/example_profile_basic.png)
+![alt](../imgs/example_profile_basic.png)
 
 
 
@@ -160,11 +160,11 @@ Ant Design Pro 内置了 umi，umi 使用了 webpack [devServer](https://webpack
 
 
 
-![alt](imgs/example_profile_advance1.png)
+![alt](../imgs/example_profile_advance1.png)
 
 
 
-![alt](imgs/example_profile_advance2.png)
+![alt](../imgs/example_profile_advance2.png)
 
 
 

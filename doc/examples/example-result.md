@@ -35,7 +35,7 @@ formatMessage 是函数　　FormattedMessage　是标签
 
 
 
-![alt](imgs/example_result_success.png)
+![alt](../imgs/example_result_success.png)
 
 
 
@@ -63,4 +63,4 @@ formatMessage 是函数　　FormattedMessage　是标签
 
 
 
-![alt](imgs/example_result_error.png)
+![alt](../imgs/example_result_error.png)

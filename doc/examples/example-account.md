@@ -175,11 +175,11 @@ if (inputValue && newTags.filter(tag => tag.label === inputValue).length === 0) 
 
 
 
-![alt](imgs/example_account_center_tag1.png)
+![alt](../imgs/example_account_center_tag1.png)
 
 
 
-![alt](imgs/example_account_center_tag2.png)
+![alt](../imgs/example_account_center_tag2.png)
 
 
 
@@ -206,7 +206,7 @@ const TabPane = Tabs.TabPane;
 
 
 
-![alt](imgs/example_account_center_tab1.png)
+![alt](../imgs/example_account_center_tab1.png)
 
 
 
@@ -217,7 +217,7 @@ const TabPane = Tabs.TabPane;
 
 
 
-![alt](imgs/example_account_center_tab.png)
+![alt](../imgs/example_account_center_tab.png)
 
 ```
 使用Card　Tab的步骤：
@@ -228,7 +228,7 @@ const TabPane = Tabs.TabPane;
 
 
 
-![alt](imgs/example_account_center_tab_code.png)
+![alt](../imgs/example_account_center_tab_code.png)
 
 
 
@@ -254,7 +254,7 @@ List.Item.Meta
 
 ```
 
-![alt](imgs/example_account_center_article.png)
+![alt](../imgs/example_account_center_article.png)
 
 
 
@@ -266,7 +266,7 @@ List.Item.Meta
 具体的显示，用了Card控件
 ```
 
-![alt](imgs/example_account_center_application0.png)
+![alt](../imgs/example_account_center_application0.png)
 
 
 
@@ -297,7 +297,7 @@ List.Item.Meta
   }
 ```
 
-![alt](imgs/example_account_center_application1.png)
+![alt](../imgs/example_account_center_application1.png)
 
 
 
@@ -325,11 +325,11 @@ Card.Meta
 
 ```
 
-![alt](imgs/example_account_center_application2.png)
+![alt](../imgs/example_account_center_application2.png)
 
 ### 项目List列表
 
-![alt](imgs/example_account_center_project.png)
+![alt](../imgs/example_account_center_project.png)
 
 
 
@@ -354,7 +354,7 @@ Card.Meta
 
 ## 个人设置
 
-![alt](imgs/example_account_setting_info.png)
+![alt](../imgs/example_account_setting_info.png)
 
 
 

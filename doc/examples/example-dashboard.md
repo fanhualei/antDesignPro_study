@@ -47,7 +47,7 @@
 
 
 
-![alt](imgs/example_dashboard_analysis_01.png)
+![alt](../imgs/example_dashboard_analysis_01.png)
 
 
 
@@ -60,7 +60,7 @@
 
 
 
-![alt](imgs/example_dashboard_analysis_02.png)
+![alt](../imgs/example_dashboard_analysis_02.png)
 
 
 
@@ -73,7 +73,7 @@
 
 
 
-![alt](imgs/example_dashboard_analysis_03.png)
+![alt](../imgs/example_dashboard_analysis_03.png)
 
 ```
 布局：
@@ -93,7 +93,7 @@
 
 
 
-![alt](imgs/example_dashboard_analysis_04.png)
+![alt](../imgs/example_dashboard_analysis_04.png)
 
 ```
 １：使用了Card在最外层
@@ -139,7 +139,7 @@
 
 
 
-![alt](imgs/example_dashboard_monitor_01.png)
+![alt](../imgs/example_dashboard_monitor_01.png)
 
 ```
 布局
@@ -160,7 +160,7 @@ ActiveChart 是一个目标组件可以研究一下
 
 
 
-![alt](imgs/example_dashboard_monitor_02.png)
+![alt](../imgs/example_dashboard_monitor_02.png)
 
 ```
 １：一行三列，分别是2/4 1/4 1/4 
@@ -205,7 +205,7 @@ Pro组件
 
 
 
-![alt](imgs/example_dashboard_workplace_01.png)
+![alt](../imgs/example_dashboard_workplace_01.png)
 
 > 进行中的项目
 
@@ -241,7 +241,7 @@ updatedAt: "2018-11-21T13:07:05.971Z"
 user: {name: "曲丽丽", avatar: "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"}
 ```
 
-![alt](imgs/example_dashboard_workplace_03.png)
+![alt](../imgs/example_dashboard_workplace_03.png)
 
 > 便捷导航
 
@@ -251,7 +251,7 @@ user: {name: "曲丽丽", avatar: "https://gw.alipayobjects.com/zos/rmsportal/Bi
 EditableLinkGroup 是用来快速导航，这是一个自定义控件，可以研究一下他的代码
 ```
 
-![alt](imgs/example_dashboard_workplace_04.png)
+![alt](../imgs/example_dashboard_workplace_04.png)
 
 
 
@@ -273,7 +273,7 @@ EditableLinkGroup 是用来快速导航，这是一个自定义控件，可以�
 
 
 
-![alt](imgs/example_dashboard_workplace_05.png)
+![alt](../imgs/example_dashboard_workplace_05.png)
 
 
 

@@ -25,6 +25,7 @@ https://ant.design/docs/react/introduce-cn
   * [Axure设计](doc/axure.md)
   * 调试插件
     * [redux-devtools调试工具](https://github.com/zalmoxisus/redux-devtools-extension)
+      * 下载后，在工程目录中执行：cnpm install  redux-devtools-extension --save-dev
 * 基础知识（学习基础知识，并做两个小例子）
   * [Ant Design Pro官方文档笔记](doc/first.md)
   * [菜鸟网络-React笔记](doc/react.md)
@@ -45,31 +46,19 @@ https://ant.design/docs/react/introduce-cn
   * 网友的学习笔记
     * [Ant Design 实战教程（beta 版）](https://www.yuque.com/ant-design/course)
     * [Ant Design Pro总结篇](https://www.codercto.com/a/26106.html)
-    * [跨域处理](doc/cors.md)
-  * 单元测试jtest
-  * 跨域的处理：
-    * 可以在服务器段处理，也可以在客户端处理，我现在是在服务器端处理的，今后可以换到客户端
+    * 单元测试jtest
+  * [跨域处理](doc/cors.md)
 * [正常项目需要做的工作](doc/myproject.md)
-* [快速入门](doc/first.md)
 * 例子代码分析
-  * [表单页](doc/example.md)
-  * [列表页](doc/example-list.md)
-  * [结果页](doc/example-result.md)
-  * [异常页](doc/example-exception.md)
-  * [个人主页](doc/example-account.md)
-  * [dashboard](./doc/example-dashboard.md)
-  * 登录注册
-  * 顶部导航与设置
-* 预备知识
-  * [dva](doc\dva.md)
-* 高级应用
-  * 自定义组建
-  * umi脚手架
-* 调试
-  * 输出debug信息
-  * 添加日志模块
-  * mock模拟数据
-  * 自动化测试
+  * [表单页](doc/examples/example.md)
+  * [列表页](doc/examples/example-list.md)
+  * [结果页](doc/examples/example-result.md)
+  * [异常页](doc/examples/example-exception.md)
+  * [个人主页](doc/examples/example-account.md)
+  * [dashboard](./doc/examples/example-dashboard.md)
+  * [详情页例子](doc/examples/example-profile.md)
+  
+  
 * 安全
   * 菜单权限控制
   * Session与Token登录
@@ -77,14 +66,5 @@ https://ant.design/docs/react/introduce-cn
 * 部署
   * Niginx 部署
   * 分布式部署
-* 例子代码说明
-  * [表单例子]((doc/example.md))
-  * [列表例子](doc/example-list.md)
-  * [详情页例子](doc/example-profile.md)
-* antDesign组建说明
-
-
-
-
 
 

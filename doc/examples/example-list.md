@@ -134,7 +134,7 @@ export async function queryFakeList(params) {
 /api/fake_list 如果mock中配置的有，那么默认访问测试文件，当然也可以写成真实的地址
 stringify 函数自动把参数给拼装了
 export async function dva() {
-  return request('http://wx.runzhichina.com/wechat/adImgs/imgList');
+  return request('http://wx.runzhichina.com/wechat/ad../imgs/imgList');
 }
 */
 ```
@@ -163,7 +163,7 @@ export default {
 
 ###页面分析	1
 
-![alt](imgs/example_list_basic.png)
+![alt](../imgs/example_list_basic.png)
 
 这个页面显示部分，分为两个Card标签．
 
@@ -340,7 +340,7 @@ paginationProps
 
 effects会调用reducers，effects是异步的，reducers是同步的
 
-![alt](imgs/example_map.png)
+![alt](../imgs/example_map.png)
 
 
 
@@ -463,7 +463,7 @@ export async function updateFakeList(params) {
 
 #### 页面分析2
 
-![alt](imgs/example_list_card.png)
+![alt](../imgs/example_list_card.png)
 
 
 
@@ -526,7 +526,7 @@ export async function updateFakeList(params) {
 
 > 页面效果
 
-![alt](imgs/example_list_search_menu.png)
+![alt](../imgs/example_list_search_menu.png)
 
 
 
@@ -614,7 +614,7 @@ export async function updateFakeList(params) {
 
 
 
-![alt](imgs/example_list_search_allpage.png)
+![alt](../imgs/example_list_search_allpage.png)
 
 
 
@@ -718,7 +718,7 @@ key一定要与url的结尾一致，因为通过这个名字，来判断那个ta
 
 
 
-![alt](imgs/example_list_search_article.png)
+![alt](../imgs/example_list_search_article.png)
 
 
 
@@ -746,7 +746,7 @@ key一定要与url的结尾一致，因为通过这个名字，来判断那个ta
 
 FormItem
 
-![alt](imgs/example_list_search_article_list.png)
+![alt](../imgs/example_list_search_article_list.png)
 
 
 
@@ -882,7 +882,7 @@ React难道每次都把数据缓存到前端吗？
 
 #### 项目页面
 
-![alt](imgs/example_list_search_project.png)
+![alt](../imgs/example_list_search_project.png)
 
 
 
