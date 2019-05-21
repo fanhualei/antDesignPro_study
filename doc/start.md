@@ -76,3 +76,37 @@ $ npm start
 * 当执行没有问题后，就run，看程序是否能跑起来。
 * 如果能跑起来，就commit到git中。
 
+
+
+### 如何将代码提交到自己的分支上去
+
+1：从阿里的分支获取代码，使用了clone命令。
+
+2：但是在提交到自己分支的时候，会出现错误。
+
+```
+[remote rejected] (shallow update not allowed)
+```
+
+3：这时候要执行fetch命令
+
+```
+## origin是阿里分支的别名
+git  fetch --unshallow origin
+```
+
+```
+git fetch 和git pull 的差别
+1、git fetch 相当于是从远程获取最新到本地，不会自动merge
+2. git pull：相当于是从远程获取最新版本并merge到本地
+3. git  fetch --unshallow origin 获得完整的代码
+```
+
+4：执行完毕后，再上传到自己的分支上去。
+
+
+
+
+
+
+

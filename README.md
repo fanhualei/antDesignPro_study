@@ -23,6 +23,7 @@ https://ant.design/docs/react/introduce-cn
   * [git的使用](doc/git.md)
   * [如何及时更新最新版本](doc/start.md#如何及时更新最新版本)
   * [Axure设计](doc/axure.md)
+    * [设计规范速查手册](https://github.com/ant-design/ant-design/wiki/Ant-Design-%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80%E7%AE%80%E7%89%88)
   * 调试插件
     * [redux-devtools调试工具](https://github.com/zalmoxisus/redux-devtools-extension)
       * 下载后，在工程目录中执行：cnpm install  redux-devtools-extension --save-dev
@@ -57,7 +58,6 @@ https://ant.design/docs/react/introduce-cn
   * [个人主页](doc/examples/example-account.md)
   * [dashboard](./doc/examples/example-dashboard.md)
   * [详情页例子](doc/examples/example-profile.md)
-  
   
 * 安全
   * 菜单权限控制
